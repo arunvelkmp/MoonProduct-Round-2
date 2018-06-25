@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style> 
+input[type=text] {
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('searchicon.png');
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    width: 100%;
+}
+</style>
+<title>Giphy</title>
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', function () {
+	
+	request = new XMLHttpRequest;
+	var q = prompt("search for gifs", "");
+	request.open('GET', 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag='+q, true);
+	
+	request.onload = function() {
+		if (request.status >= 200 && request.status < 400){
+			data = JSON.parse(request.responseText).data.image_url;
+			console.log(data);
+			document.getElementById("giphyme").innerHTML = '<center><img src = "'+data+'"  title="GIF via Giphy"></center>';
+		} else {
+			console.log('reached giphy, but API returned an error');
+		 }
+	};
+
+	request.onerror = function() {
+		console.log('connection error');
+	};
+
+	request.send();
+});
+
+	var time=0;
+function changeColor()
+{
+setTimeout("fun1()",1000);
+}
+function fun1()
+{
+var colors =new Array("red","darkblue","sky","yellow","blue","pink","green","red","white");
+if(time<=8)
+{
+document.bgColor=colors[time++];
+setTimeout("fun1()",1000);
+}
+else
+{
+time=0;
+changeColor();
+}
+}
+</script>
+</head>
+<body bgcolor="gray" onload="changeColor()">
+
+<h1>Hurrah!!!!! Your gif is ready</h1>
+<span id = "giphyme"></span>
+</body>
+</html>
